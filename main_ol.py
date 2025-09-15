@@ -199,8 +199,8 @@ if submit:
             errors.append(f"- **{k}** wajib diisi.")
 
     coords = parse_coords(koordinat) if koordinat else None
-    if not coords:
-        errors.append("- **Koordinat** harus format `lat, lon`, contoh: `-6.71, 108.56`.")
+    # if not coords:
+    #     errors.append("- **Koordinat** harus format `lat, lon`, contoh: `-6.71, 108.56`.")
     if foto_luar is None:
         errors.append("- **Foto Bagian Luar** wajib diunggah.")
     if foto_dalam is None:
@@ -270,3 +270,4 @@ if submit:
 
 # Optional admin viewer (reads from local CSV no longer needed; view Sheet in Google UI)
 st.info("Semua data tersimpan ke Google Sheets. Gunakan spreadsheet untuk melihat/menyaring data.")
+
