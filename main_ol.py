@@ -174,6 +174,18 @@ else:
 if desa:
     st.markdown("---")
     koordinat = st.text_input("KOORDINAT LOKASI*", placeholder="-6.71, 108.56 (lat, lon)")
+    
+    # --- Normalize input and validate ---
+    if koordinat:
+        # Normalize commas to periods for decimal coordinates
+        normalized_koordinat = normalize_coordinates(koordinat)
+        coords = parse_coords(normalized_koordinat)
+        
+        if not coords:
+            st.error("Format koordinat tidak valid! Pastikan menggunakan format 'lat, lon' dengan titik (.)")
+        else:
+            st.success(f"Koordinat berhasil diinput: {normalized_koordinat}")
+    
     nama_pemilik = st.text_input("NAMA PEMILIK SHM/SHGB*", placeholder="Nama di sertifikat")
     jenis_sertifikat = st.selectbox("JENIS SERTIFIKAT*", options=["SHM", "SHGB"], index=0)
     luas_tanah = st.number_input("LUAS TANAH (m²)*", min_value=0, step=1)
@@ -191,15 +203,6 @@ else:
     luas_tanah = luas_bangunan = harga_sewa = None
     foto_luar = foto_dalam = video = None
     submit = False
-
-if koordinat:
-    normalized_koordinat = normalize_coordinates(koordinat)
-    coords = parse_coords(normalized_koordinat)
-    
-    # # if not coords:
-    # #     st.error("Format koordiat tidak valid! Pastikan menggunakan format 'lat, lon' dengan titik (.)")
-    # # else:
-    # st.success(f"Koordinat berhasil diinput: {normalized_koordinat}")
 
 # --- Handle submission ---
 if submit:
