@@ -196,10 +196,10 @@ if koordinat:
     normalized_koordinat = normalize_coordinates(koordinat)
     coords = parse_coords(normalized_koordinat)
     
-    # if not coords:
-    #     st.error("Format koordiat tidak valid! Pastikan menggunakan format 'lat, lon' dengan titik (.)")
-    # else:
-    st.success(f"Koordinat berhasil diinput: {normalized_koordinat}")
+    # # if not coords:
+    # #     st.error("Format koordiat tidak valid! Pastikan menggunakan format 'lat, lon' dengan titik (.)")
+    # # else:
+    # st.success(f"Koordinat berhasil diinput: {normalized_koordinat}")
 
 # --- Handle submission ---
 if submit:
@@ -286,6 +286,7 @@ if submit:
 
 # Optional admin viewer (reads from local CSV no longer needed; view Sheet in Google UI)
 st.info("Semua data tersimpan ke Google Sheets. Gunakan spreadsheet untuk melihat/menyaring data.")
+
 
 
 
