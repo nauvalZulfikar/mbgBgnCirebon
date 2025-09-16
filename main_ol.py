@@ -85,6 +85,13 @@ COLUMNS = [
 # --- Helpers ---
 COORD_RE = re.compile(r"^\s*(-?\d+(\.\d+)?)\s*,\s*(-?\d+(\.\d+)?)\s*$")
 
+def normalize_coordinates(coord_input: str):
+    # Replace commas with periods (if the user uses commas instead of periods)
+    normalized = coord_input.replace(",", ".").strip()
+    
+    # Ensure the coordinate format is valid (check using regex or manual validation)
+    return normalized
+
 def parse_coords(text: str):
     if not text:
         return None
@@ -185,6 +192,15 @@ else:
     foto_luar = foto_dalam = video = None
     submit = False
 
+if koordinat:
+    normalized_koordinat = normalize_coordinates(koordinat)
+    coords = parse_coords(normalized_koordinat)
+    
+    if not coords:
+        st.error("Format koordiat tidak valid! Pastikan menggunakan format 'lat, lon' dengan titik (.)")
+    else:
+        st.success(f"Koordinat berhasil diinput: {normalized_koordinat}")
+
 # --- Handle submission ---
 if submit:
     # Basic required checks
@@ -199,8 +215,8 @@ if submit:
             errors.append(f"- **{k}** wajib diisi.")
 
     coords = parse_coords(koordinat) if koordinat else None
-    # if not coords:
-    #     errors.append("- **Koordinat** harus format `lat, lon`, contoh: `-6.71, 108.56`.")
+    if not coords:
+        errors.append("- **Koordinat** harus format `lat, lon`, contoh: `-6.71, 108.56`.")
     if foto_luar is None:
         errors.append("- **Foto Bagian Luar** wajib diunggah.")
     if foto_dalam is None:
@@ -270,4 +286,5 @@ if submit:
 
 # Optional admin viewer (reads from local CSV no longer needed; view Sheet in Google UI)
 st.info("Semua data tersimpan ke Google Sheets. Gunakan spreadsheet untuk melihat/menyaring data.")
+
 
