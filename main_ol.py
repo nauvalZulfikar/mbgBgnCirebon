@@ -85,13 +85,6 @@ COLUMNS = [
 # --- Helpers ---
 COORD_RE = re.compile(r"^\s*(-?\d+(\.\d+)?)\s*,\s*(-?\d+(\.\d+)?)\s*$")
 
-def normalize_coordinates(coord_input: str):
-    # Replace commas with periods (if the user uses commas instead of periods)
-    normalized = coord_input.replace(",", ".").strip()
-    
-    # Ensure the coordinate format is valid (check using regex or manual validation)
-    return normalized
-
 def parse_coords(text: str):
     if not text:
         return None
@@ -170,14 +163,14 @@ if kecamatan:
 else:
     desa = None
 
-# Reveal the rest after DESA
+def normalize_coordinates(coord_input: str):
+    normalized = coord_input.replace(",", ".").strip()
+    return normalized
+
 if desa:
     st.markdown("---")
     koordinat = st.text_input("KOORDINAT LOKASI*", placeholder="-6.71, 108.56 (lat, lon)")
-    
-    # --- Normalize input and validate ---
     if koordinat:
-        # Normalize commas to periods for decimal coordinates
         normalized_koordinat = normalize_coordinates(koordinat)
         coords = parse_coords(normalized_koordinat)
         
@@ -289,6 +282,7 @@ if submit:
 
 # Optional admin viewer (reads from local CSV no longer needed; view Sheet in Google UI)
 st.info("Semua data tersimpan ke Google Sheets. Gunakan spreadsheet untuk melihat/menyaring data.")
+
 
 
 
